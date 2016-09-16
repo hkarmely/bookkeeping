@@ -3,38 +3,56 @@
  */
 
 .bubbles {
-  margin-bottom: 30px;
-  text-align: center;
+    margin-bottom: 30px;
+    text-align: center;
 }
-.bubbles .bubble-container .bubble{
+
+.bubbles .bubble-container .bubble {
     height: 200px;
     width: 200px;
     line-height: 200px;
     border-radius: 100px;
     font-size: 28px;
     color: white;
+    margin: 0 auto;
 }
-.bubble-primary{
+
+.bubble-primary {
     background-color: #428bca;
 }
-.bubble-warning{
+
+.bubble-warning {
     background-color: #f0ad4e;
 }
-.bubble-success{
+
+.bubble-success {
     background-color: #5cb85c;
 }
-.bubble-danger{
+
+.bubble-danger {
     background-color: #d9534f;
 }
 
 .bubble-container h4 {
-  margin: 20px 0 10px;
-}
-.bubble-container {
-  margin-bottom: 20px;
-}
-.bubble-container img {
-  display: inline-block;
-  border-radius: 50%;
+    margin: 20px 0 10px;
 }
 
+.bubble-container {
+    margin-bottom: 20px;
+}
+
+.bubble-container img {
+    display: inline-block;
+    border-radius: 50%;
+}
+
+@media(max-width:768px) {
+    .table tr th:nth-child(3),
+    .table tr th:nth-child(4),
+    .table tr th:nth-child(5),
+    .table tr td:nth-child(3),
+    .table tr td:nth-child(4),
+    .table tr td:nth-child(5) {
+        display: none;
+    }
+}

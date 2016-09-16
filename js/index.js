@@ -1,8 +1,13 @@
 $(function() {
     bootbox.setLocale('zh_CN');
+    initDeepLink();
 
-    initSidebar();
-    $(window).on('page-navigate', onPageNavigate);
+    $(window).on('page-loaded', onPageLoaded);
+
+    $('.navbar-fixed-top .nav a').click(function(){
+        $(this).closest('.collapse').collapse('hide');
+    });
+
     var url = location.hash.substr(1) || 'overview';
     navigate(url);
 });
@@ -11,7 +16,7 @@ function getTitle(url) {
     return $('.sidebar li a[href=' + url + ']').html();
 }
 
-function onPageNavigate() {
+function onPageLoaded() {
     Tag.refresh();
     $('[data-toggle=tagit]').each(initTagit);
 }
@@ -30,20 +35,23 @@ function navigate(url, title) {
     $('.sidebar li a[href=' + url + ']').parent().addClass('active');
 
     location.hash = '#' + url;
+    $(window).trigger('page-navigate', [url]);
 
     $.get(url + '.html').done(function(html) {
         $('.page-content').html(html);
-        $(window).trigger('page-navigate', [url]);
+        setTimeout(function(){
+            $(window).trigger('page-loaded', [url]);
+        });
     }).fail(function(xhr) {
         Message.error('Fetch page error: ' + xhr.responseText);
     });
 }
 
-function initSidebar($sidebar) {
-    $('.sidebar').on('click', '.nav li a', function(e) {
+function initDeepLink() {
+    $('a.deep-link').click(function(e) {
+        e.preventDefault();
         var url = $(e.target).attr('href');
         var title = $(e.target).html();
         navigate(url, title);
-        return false;
     });
 }

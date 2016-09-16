@@ -84,4 +84,6 @@ body {
   margin-top: 0;
 }
 
-
+.cash:before{
+    content: '￥'
+}

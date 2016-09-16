@@ -9,7 +9,7 @@ $(function() {
 
     function renderTransactions() {
         var ts = Transaction.query();
-        console.log('[input] rendering transactions', ts.length, 'found');
+        console.log('[overview] rendering transactions', ts.length, 'found');
         ts = ts.map(function(t) {
             var $tr = $('<tr>');
             var $del = $('<a>').addClass('btn btn-xs btn-danger').html('删除')
@@ -20,8 +20,9 @@ $(function() {
                     });
                 });
             $('<td>').html(t.date).appendTo($tr);
-            $('<td>').html(t.amount).appendTo($tr);
+            $('<td class="cash">').html(t.amount).appendTo($tr);
             $('<td>').html(t.category).appendTo($tr);
+            $('<td>').html(t.channel).appendTo($tr);
             $('<td>').html(t.tags).appendTo($tr);
             $('<td>').append($del).appendTo($tr);
             return $tr;
@@ -31,7 +32,7 @@ $(function() {
 
     function renderTags() {
         var ts = Tag.query();
-        console.log('[input] rendering tags', ts.length, 'found');
+        console.log('[overview] rendering tags', ts.length, 'found');
         ts = ts.map(function(tag) {
             return tag.name;
         }).join(',');

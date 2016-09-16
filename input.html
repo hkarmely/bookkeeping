@@ -1,32 +1,38 @@
 <link rel="stylesheet" href="./css/input.css">
 <form class="transaction-form form-horizontal" role="form">
   <div class="form-group">
-    <label for="date" class="col-sm-2 control-label">Date</label>
+    <label for="date" class="col-sm-2 control-label">日期</label>
     <div class="col-sm-10">
-      <input type="date" value="2016-01-01" class="form-control" id="date" name="date" placeholder="when did you make this transaction?">
+      <input type="date" value="2016-01-01" class="form-control" id="date" name="date" placeholder="交易日期是？">
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label" for="amount">Amount</label>
+    <label class="col-sm-2 control-label" for="amount">数额</label>
     <div class="col-sm-10">
-      <input type="number" value="0" required class="form-control" id="amount" name="amount" placeholder="with a optional sign">
+      <input type="number" value="0" required class="form-control" id="amount" name="amount" placeholder="添加负号则为支出">
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label" for="category">Category</label>
+    <label class="col-sm-2 control-label" for="channel">渠道</label>
     <div class="col-sm-10">
-      <input type="text" required class="form-control" id="category" name="category" placeholder="required">
+      <input type="text" class="form-control" id="channel" name="channel" placeholder="从哪里支出的？收入到哪里？">
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label" for="tags">Tags</label>
+    <label class="col-sm-2 control-label" for="category">类别</label>
+    <div class="col-sm-10">
+      <input type="text" required class="form-control" id="category" name="category" placeholder="每项支出/收入都应有对应的类别" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="tags">标签</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" data-toggle="tagit" id="tags" name="tags" placeholder="optional">
     </div>
   </div>
 
   <p class="text-right">
-    <button type="submit" class="btn btn-default btn-primary">Submit</button>
+    <button type="submit" class="btn btn-default btn-primary">提交</button>
   </p>
 </form>
 

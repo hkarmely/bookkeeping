@@ -1,4 +1,4 @@
-$(function() {
+$(window).on('page-loaded', function() {
     var $form = $('.transaction-form');
     $form.submit(function(e) {
         e.preventDefault();

@@ -31,8 +31,6 @@ function initTagit(i, el) {
         return tag.name;
     });
 
-    console.log('fdasfa', $el.is('[readonly]'));
-
     $el.tagit({
         availableTags: tags,
         autocomplete: {
