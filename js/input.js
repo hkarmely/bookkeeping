@@ -1,6 +1,6 @@
 $(window).on('page-loaded', function() {
     var $form = $('.transaction-form');
-    $form.submit(function(e) {
+    $form.off('submit').on('submit', function(e) {
         e.preventDefault();
         var transaction = _.chain($form.serializeArray())
             .map(function(v) {
