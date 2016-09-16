@@ -1,0 +1,46 @@
+<link rel="stylesheet" href="./css/overview.css">
+
+<div class="row bubbles">
+  <div class="col-xs-6 col-sm-3 bubble-container">
+    <p class="bubble bubble-success" id="total-income"></p>
+    <h4>Total Income</h4>
+    <span class="text-muted">Are you a Jew?</span>
+  </div>
+  <div class="col-xs-6 col-sm-3 bubble-container">
+    <p class="bubble bubble-warning" id="total-expense"></p>
+    <h4>Total Expense</h4>
+    <span class="text-muted">Be friends, Tyrant!</span>
+  </div>
+  <div class="col-xs-6 col-sm-3 bubble-container">
+    <p class="bubble bubble-danger" id="income-transactions"></p>
+    <h4>Income Transactions</h4>
+    <span class="text-muted">Woow!</span>
+  </div>
+  <div class="col-xs-6 col-sm-3 bubble-container">
+    <p class="bubble bubble-primary" id="expense-transactions"></p>
+    <h4>Expense Transactions</h4>
+    <span class="text-muted">Oha?</span>
+  </div>
+</div>
+
+<section>
+  <h3>交易</h3>
+  <table class="transaction-table table table-striped table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>日期</th>
+        <th>数额</th>
+        <th>类别</th>
+        <th>标签</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+<section>
+  <h3>标签</h3>
+  <input type="text" class="form-control" readonly data-toggle="tagit" id="tags" name="tags" bubble="optional">
+</section>
+
+<script src="./js/overview.js"></script>

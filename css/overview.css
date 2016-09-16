@@ -1,0 +1,40 @@
+/*
+ * bubble dashboard ideas
+ */
+
+.bubbles {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.bubbles .bubble-container .bubble{
+    height: 200px;
+    width: 200px;
+    line-height: 200px;
+    border-radius: 100px;
+    font-size: 28px;
+    color: white;
+}
+.bubble-primary{
+    background-color: #428bca;
+}
+.bubble-warning{
+    background-color: #f0ad4e;
+}
+.bubble-success{
+    background-color: #5cb85c;
+}
+.bubble-danger{
+    background-color: #d9534f;
+}
+
+.bubble-container h4 {
+  margin: 20px 0 10px;
+}
+.bubble-container {
+  margin-bottom: 20px;
+}
+.bubble-container img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
