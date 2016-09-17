@@ -49,7 +49,9 @@ define([
     }
 
     function renderTags() {
-        var ts = Tag.queryName();
+        var ts = Tag.query().map(function(tag) {
+            return tag.name + '(' + tag.count + ')';
+        });
         console.log('[overview] rendering tags', ts.length, 'found');
         $('#tags').val(ts.join(','));
     }
