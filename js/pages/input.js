@@ -4,7 +4,7 @@ define([
     'models/transaction',
     'utils/message',
     'tag-it',
-    'utils/form'
+    'utils/jquery.form'
 ], function($, Tag, Transaction, Message) {
     function onload() {
         $('#tags').tagit({

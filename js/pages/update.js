@@ -3,7 +3,7 @@ define([
     'models/tag',
     'models/transaction',
     'utils/message',
-    'utils/form',
+    'utils/jquery.form',
     'tag-it'
 ], function($, Tag, Transaction, Message) {
     function onload(params) {
