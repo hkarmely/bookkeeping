@@ -18,13 +18,21 @@ define([
                 Message.error('标签够多了哦！');
             }
         });
+        reset();
         $('.transaction-form').on('submit', function(e) {
             e.preventDefault();
             var t = $(this).serializeObject();
             t = Transaction.create(t);
+            reset();
             Tag.refresh();
             Message.success('已保存：' + t.date + '，￥' + t.amount);
         });
+    }
+
+    function reset(){
+        $('#date').val(new Date());
+        $('.transaction-form').get(0).reset();
+        $('#tags').tagit('removeAll');
     }
 
     function onunload() {
