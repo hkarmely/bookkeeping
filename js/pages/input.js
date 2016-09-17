@@ -3,9 +3,10 @@ define([
     'models/tag',
     'models/transaction',
     'utils/message',
+    'strftime',
     'tag-it',
     'utils/jquery.form'
-], function($, Tag, Transaction, Message) {
+], function($, Tag, Transaction, Message, strftime) {
     function onload() {
         $('#tags').tagit({
             availableTags: Tag.queryName(),
@@ -30,8 +31,8 @@ define([
     }
 
     function reset(){
-        $('#date').val(new Date());
         $('.transaction-form').get(0).reset();
+        $('#date').val(strftime('%Y-%m-%d'));
         $('#tags').tagit('removeAll');
     }
 

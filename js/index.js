@@ -54,6 +54,7 @@ define([
 				Tag.refresh();
 				page.onload && page.onload(url.query);
 				currentPage = page;
+                $('.page-content [autofocus]').focus();
 			});
 		}).fail(function(xhr) {
 			Message.error('Fetch page error: ' + xhr.responseText);

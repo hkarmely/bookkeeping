@@ -10,9 +10,13 @@ requirejs.config({
         'lodash': "../lib/lodash/lodash.min",
         'bootbox': "../lib/bootbox/bootbox.min",
         'highcharts': "../lib/highcharts/highcharts",
-        'bluebird': '../lib/bluebird/bluebird.min'
+        'bluebird': '../lib/bluebird/bluebird.min',
+        'strftime': '../lib/strftime/strftime-min'
     },
     shim: {
+        strftime: {
+            exports: 'strftime'
+        },
         bootstrap: ['jquery'],
         messenger: {
             exports: "Messenger",

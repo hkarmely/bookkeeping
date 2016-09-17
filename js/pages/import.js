@@ -1,8 +1,9 @@
 define([
     'jquery',
     'utils/message',
-    'models/transaction'
-], function($, Message, Transaction) {
+    'models/transaction',
+    'strftime'
+], function($, Message, Transaction, strftime) {
     function onload() {
         $('.import-form').on('submit', function(e) {
             e.preventDefault();
@@ -31,8 +32,7 @@ define([
 
     function saveOldTransactions() {
         var old = Transaction.query();
-        var now = new Date();
-        var fingerprint = 'transaction-' + now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + (now.getDate());
+        var fingerprint = 'transaction-' + strftime('%Y-%m-%d');
         console.log('[import] saving old transactions to', fingerprint);
         localStorage[fingerprint] = old;
     }
