@@ -1,37 +1,34 @@
-define(['models/storage'], function(Storage){
+define(['models/storage', 'utils/guid'], function(Storage, GUID) {
 
-    var _id = 0;
+    function Model(name) {
+        this.name = name;
+        this.cbs = {
+            changed: []
+        };
+        if(!Storage.get(this.name)){
+            Storage.set(this.name, {});
+        }
+    }
 
-    var model = {
+    Model.prototype = {
         get: function(id) {
-            var arr = this.query();
-            for (var i = 0; i < arr.length; i++) {
-                if (obj.id === id) return obj;
-            }
-            return null;
+            return Storage.get(this.name)[id];
         },
         update: function(id, val) {
-            var arr = this.query();
-            var update = arr.some(function(obj, i) {
-                if (id === obj.id) {
-                    val = new Model(val);
-                    arr.splice(i, 1, val);
-                    this.dump(arr);
-                    return true;
-                }
-            }.bind(this));
-            this.trigger('changed');
-            return update;
+            var all = Storage.get(this.name);
+            if(!all[id]) return false;
+
+            if(this.normalize){
+                val = this.normalize(val);
+            }
+            var ret = _.assign(all[id], val);
+            this.dump(all);
+            return ret;
         },
         on: function(type, cb) {
-            console.log('[store] event on', type);
-            cb.id = _id++;
             this.cbs[type].push(cb);
-            //console.log(this.cbs[type]);
-            return cb.id;
         },
         off: function(type, targetCb) {
-            console.log('[store] event off', type);
             _.some(this.cbs[type], function(cb, i) {
                 if (cb === targetCb) {
                     this.cbs[type].splice(i, 1);
@@ -40,55 +37,38 @@ define(['models/storage'], function(Storage){
             }.bind(this));
         },
         trigger: function(type) {
-            console.log('[store] triggering',
-                this.cbs[type].length, 'callbacks for', type, 'event');
-            //console.log(this.cbs[type]);
             this.cbs[type].forEach(function(cb) {
                 cb();
             });
         },
         create: function(val) {
-            val.id = _id++;
-            return val;
-        },
-        save: function(val) {
-            console.log('[store] saving', this.name);
-            val = this.create(val);
-            var arr = this.query();
-            arr.push(val);
-            this.dump(arr);
-            this.trigger('changed');
+            val = this.normalize(val);
+            val.id = GUID();
+            var all = Storage.get(this.name);
+            all[val.id] = val;
+            this.dump(all);
             return val;
         },
         remove: function(id) {
-            console.log('[store] removing', id);
-            var arr = this.query();
-            var val;
-            arr = arr.filter(function(_val) {
-                return _val.id !== id;
-            });
-            this.dump(arr);
-            this.trigger('changed');
+            var all = Storage.get(this.name);
+            var val = all[id];
+            delete all[id];
+            this.dump(all);
             return val;
         },
         query: function() {
-            return Storage.get(this.name) || [];
+            return _.values(Storage.get(this.name));
         },
         dump: function(v) {
-            console.log('[store] dumping', this.name);
             Storage.set(this.name, v);
             this.trigger('changed');
+            return v;
+        },
+        // default implementation
+        normalize: function(v){
             return v;
         }
     };
 
-    return function(name) {
-        var m = Object.create(model);
-        m.name = name;
-        m.cbs = {
-            changed: []
-        };
-        return m;
-    }
-
+    return Model;
 });

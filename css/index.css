@@ -91,3 +91,10 @@ body {
 a.deep-link{
     cursor: pointer;
 }
+
+.ui-widget-content{
+	background: none;
+}
+.tagit-new .ui-widget-content[disabled]{
+    display: none;
+}

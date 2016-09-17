@@ -3,10 +3,13 @@ define([
     'models/tag',
     'models/transaction',
     'utils/message',
-    'tag-it',
-    'utils/form'
+    'utils/form',
+    'tag-it'
 ], function($, Tag, Transaction, Message) {
-    function onload() {
+    function onload(params) {
+        var t = Transaction.get(params.id);
+        $('.transaction-form').populate(t);
+
         $('#tags').tagit({
             availableTags: Tag.queryName(),
             placeholderText: '以逗号分隔',
@@ -18,11 +21,11 @@ define([
                 Message.error('标签够多了哦！');
             }
         });
+
         $('.transaction-form').on('submit', function(e) {
             e.preventDefault();
             var t = $(this).serializeObject();
-            t = Transaction.create(t);
-            Tag.refresh();
+            Transaction.update(params.id, t);
             Message.success('已保存：' + t.date + '，￥' + t.amount);
         });
     }

@@ -1,4 +1,10 @@
-define(['models/model'], function(Model){
-    var Transaction = Model('transactions');
-    return Transaction;
+define(['models/model'], function(Model) {
+	var Transaction = new Model('transactions');
+	Transaction.normalize = function(obj) {
+		if(obj.amount){
+			obj.amount = Number(obj.amount);
+		}
+		return obj;
+	};
+	return Transaction;
 });

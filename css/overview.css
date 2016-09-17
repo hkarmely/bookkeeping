@@ -56,3 +56,7 @@
         display: none;
     }
 }
+
+.table td .btn{
+	margin: 5px;
+}
