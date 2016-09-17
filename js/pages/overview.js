@@ -2,9 +2,11 @@ define([
     'jquery', 'models/tag', 'models/transaction', 'utils/message', 'tag-it'
 ], function($, Tag, Transaction, Message) {
     function onload() {
-        updateData();
 
-        Transaction.on('changed', renderTransactions);
+        Transaction.on('changed', function(){
+            renderTransactions();
+            renderTotal();
+        });
         Tag.on('changed', renderTags);
 
         Transaction.trigger('changed');
@@ -56,7 +58,7 @@ define([
         $('#tags').val(ts.join(','));
     }
 
-    function updateData() {
+    function renderTotal() {
         var ts = Transaction.query();
         var totalIn = 0,
             totalOut = 0,
@@ -71,11 +73,12 @@ define([
                 totalOut -= t.amount;
             }
         });
-        $('#total-income').html(totalIn);
-        $('#total-expense').html(totalOut);
+        $('#total-income').html(Number(totalIn).toFixed(2));
+        $('#total-expense').html(Number(totalOut).toFixed(2));
         $('#income-transactions').html(tsIn);
         $('#expense-transactions').html(tsOut);
     }
+
     return {
         onload: onload,
         onunload: onunload
