@@ -64,6 +64,17 @@ define(['models/storage', 'utils/guid'], function(Storage, GUID) {
             this.trigger('changed');
             return v;
         },
+        dumpArray: function(arr) {
+            var obj = {};
+            arr.forEach(function(o){
+                // already exist or null
+                if(obj[o.id] && !o.id){
+                    obj.id = GUID();
+                }
+                obj[o.id] = obj;
+            });
+            Storage.set(this.name, obj);
+        },
         // default implementation
         normalize: function(v){
             return v;
