@@ -11,7 +11,7 @@ define(['models/tag', 'jquery'], function(Tag, $) {
     require(['index']);
 
     function getTitle(url) {
-        return $('.sidebar li a[href=' + url + ']').html();
+        return $('.sidebar li a[data-href=' + url + ']').html();
     }
 
 
@@ -26,8 +26,8 @@ define(['models/tag', 'jquery'], function(Tag, $) {
 
         $('.page-header').html(title);
         $('.page-content').html($loading);
-        $('.sidebar').find('.nav li').removeClass('active');
-        $('.sidebar li a[href=' + url + ']').parent().addClass('active');
+        $('li a.deep-link').parent().removeClass('active');
+        $('li a[data-href=' + url + ']').parent().addClass('active');
 
         location.hash = '#' + url;
         $(window).trigger('page-navigate', [url]);
@@ -51,7 +51,7 @@ define(['models/tag', 'jquery'], function(Tag, $) {
     function initDeepLink() {
         $('a.deep-link').click(function(e) {
             e.preventDefault();
-            var url = $(e.target).attr('href');
+            var url = $(e.target).data('href');
             var title = $(e.target).html();
             navigate(url, title);
         });

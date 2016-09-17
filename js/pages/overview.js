@@ -21,22 +21,26 @@ define([
     function renderTransactions() {
         var ts = Transaction.query();
         console.log('[overview] rendering transactions', ts.length, 'found');
-        ts = ts.map(function(t) {
-            var $tr = $('<tr>');
-            var $del = $('<a>').addClass('btn btn-xs btn-danger').html('删除')
-                .click(function() {
-                    Message.confirm('确认删除该交易？').then(function() {
-                        Transaction.remove(t.id);
+        ts = ts
+            .sort(function(lhs, rhs) {
+                return (new Date(rhs.date)) - (new Date(lhs.date));
+            })
+            .map(function(t) {
+                var $tr = $('<tr>');
+                var $del = $('<a>').addClass('btn btn-xs btn-danger').html('删除')
+                    .click(function() {
+                        Message.confirm('确认删除该交易？').then(function() {
+                            Transaction.remove(t.id);
+                        });
                     });
-                });
-            $('<td>').html(t.date).appendTo($tr);
-            $('<td class="cash">').html(t.amount).appendTo($tr);
-            $('<td>').html(t.category).appendTo($tr);
-            $('<td>').html(t.channel).appendTo($tr);
-            $('<td>').html(t.tags).appendTo($tr);
-            $('<td>').append($del).appendTo($tr);
-            return $tr;
-        });
+                $('<td>').html(t.date).appendTo($tr);
+                $('<td class="cash">').html(t.amount).appendTo($tr);
+                $('<td>').html(t.category).appendTo($tr);
+                $('<td>').html(t.channel).appendTo($tr);
+                $('<td>').html(t.tags).appendTo($tr);
+                $('<td>').append($del).appendTo($tr);
+                return $tr;
+            });
         $('.transaction-table tbody').empty().append(ts);
     }
 

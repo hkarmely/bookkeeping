@@ -87,3 +87,7 @@ body {
 .cash:before{
     content: '￥'
 }
+
+a.deep-link{
+    cursor: pointer;
+}
