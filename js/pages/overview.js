@@ -1,11 +1,22 @@
-$(function() {
-    updateData();
+define([
+    'jquery', 'models/tag', 'models/transaction', 'utils/message', 'tag-it'
+], function($, Tag, Transaction, Message) {
+    function onload() {
+        updateData();
 
-    pageOn(Transaction, 'changed', renderTransactions);
-    pageOn(Tag, 'changed', renderTags);
+        Transaction.on('changed', renderTransactions);
+        Tag.on('changed', renderTags);
 
-    Transaction.trigger('changed');
-    Tag.trigger('changed');
+        Transaction.trigger('changed');
+        Tag.trigger('changed');
+
+        $('#tags').tagit();
+    }
+
+    function onunload() {
+        Transaction.off('changed', renderTransactions);
+        Tag.off('changed', renderTags);
+    }
 
     function renderTransactions() {
         var ts = Transaction.query();
@@ -14,8 +25,7 @@ $(function() {
             var $tr = $('<tr>');
             var $del = $('<a>').addClass('btn btn-xs btn-danger').html('删除')
                 .click(function() {
-                    bootbox.confirm('确认删除该交易？', function(ret) {
-                        if (!ret) return;
+                    Message.confirm('确认删除该交易？').then(function() {
                         Transaction.remove(t.id);
                     });
                 });
@@ -33,10 +43,7 @@ $(function() {
     function renderTags() {
         var ts = Tag.query();
         console.log('[overview] rendering tags', ts.length, 'found');
-        ts = ts.map(function(tag) {
-            return tag.name;
-        }).join(',');
-        $('#tags').val(ts);
+        $('#tags').val(ts.join(','));
     }
 
     function updateData() {
@@ -59,5 +66,8 @@ $(function() {
         $('#income-transactions').html(tsIn);
         $('#expense-transactions').html(tsOut);
     }
-
+    return {
+        onload: onload,
+        onunload: onunload
+    };
 });

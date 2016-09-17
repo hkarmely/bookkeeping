@@ -1,16 +1,4 @@
-(function() {
-
-    var Storage = {
-        get: function(k) {
-            var str = localStorage.getItem(k);
-            return str ? JSON.parse(str) : null;
-        },
-        set: function(k, v) {
-            var str = JSON.stringify(v);
-            localStorage.setItem(k, str);
-            return v;
-        }
-    };
+define(['models/storage'], function(Storage){
 
     var _id = 0;
 
@@ -42,20 +30,20 @@
             //console.log(this.cbs[type]);
             return cb.id;
         },
-        off: function(type, i) {
+        off: function(type, targetCb) {
             console.log('[store] event off', type);
-            _.some(this.cbs[type], function(cb, idx) {
-                if (cb.id === i) {
-                    this.cbs[type].splice(idx, 1);
+            _.some(this.cbs[type], function(cb, i) {
+                if (cb === targetCb) {
+                    this.cbs[type].splice(i, 1);
                     return true;
                 }
             }.bind(this));
         },
-        trigger: function(type){
-            console.log('[store] triggering', 
+        trigger: function(type) {
+            console.log('[store] triggering',
                 this.cbs[type].length, 'callbacks for', type, 'event');
             //console.log(this.cbs[type]);
-            this.cbs[type].forEach(function(cb){
+            this.cbs[type].forEach(function(cb) {
                 cb();
             });
         },
@@ -72,11 +60,11 @@
             this.trigger('changed');
             return val;
         },
-        remove: function(id){
+        remove: function(id) {
             console.log('[store] removing', id);
             var arr = this.query();
             var val;
-            arr = arr.filter(function(_val){
+            arr = arr.filter(function(_val) {
                 return _val.id !== id;
             });
             this.dump(arr);
@@ -88,13 +76,13 @@
         },
         dump: function(v) {
             console.log('[store] dumping', this.name);
-            window.Storage.set(this.name, v);
+            Storage.set(this.name, v);
             this.trigger('changed');
             return v;
         }
     };
 
-    function modelFactory(name) {
+    return function(name) {
         var m = Object.create(model);
         m.name = name;
         m.cbs = {
@@ -103,28 +91,4 @@
         return m;
     }
 
-    var Tag = modelFactory('tags');
-    var Transaction = modelFactory('transactions');
-
-    Tag.refresh = function(v) {
-        var transactions = Transaction.query();
-        var tags = _.chain(transactions)
-            .map(function(t) {
-                return t.tags.split(',').map(_.trim);
-            })
-            .flatten()
-            .uniq()
-            .map(function(tag) {
-                return Tag.create({
-                    name: tag
-                });
-            })
-            .value();
-        Tag.dump(tags);
-    };
-
-    window.Storage = Storage;
-    window.Tag = Tag;
-    window.Transaction = Transaction;
-
-})(window);
+});
