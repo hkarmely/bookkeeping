@@ -23,7 +23,7 @@ define([
 	function navigate(url) {
 		var TITLES = {
 			overview: '概览',
-			input: '录入',
+			input: '记录',
 			export: '导出',
 			import: '导入',
 			update: '修改',

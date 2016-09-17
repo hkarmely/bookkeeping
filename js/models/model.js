@@ -59,6 +59,9 @@ define(['models/storage', 'utils/guid'], function(Storage, GUID) {
         query: function() {
             return _.values(Storage.get(this.name));
         },
+        raw: function() {
+            return Storage.get(this.name);
+        },
         dump: function(v) {
             Storage.set(this.name, v);
             this.trigger('changed');
@@ -71,7 +74,7 @@ define(['models/storage', 'utils/guid'], function(Storage, GUID) {
                 if(obj[o.id] && !o.id){
                     obj.id = GUID();
                 }
-                obj[o.id] = obj;
+                obj[o.id] = o;
             });
             Storage.set(this.name, obj);
         },

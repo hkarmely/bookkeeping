@@ -14,8 +14,12 @@ define([
                     return Message.error('数据不合法: ' + raw);
                 }
                 saveOldTransactions();
-                Transaction.dump(data);
-
+                if(data instanceof Array){
+                    Transaction.dumpArray(data);
+                }
+                else{
+                    Transaction.dump(data);
+                }
                 Message.success('导入成功');
             });
         });
