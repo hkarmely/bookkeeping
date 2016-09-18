@@ -43,6 +43,7 @@ define([
                 $('<td class="cash">').html(t.amount).appendTo($tr);
                 $('<td>').html(t.category).appendTo($tr);
                 $('<td>').html(t.channel).appendTo($tr);
+                $('<td>').html(t.member).appendTo($tr);
                 $('<td>').html(t.tags).appendTo($tr);
                 $('<td>').append($del).append($update).appendTo($tr);
                 return $tr;
